@@ -1,0 +1,115 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Blank
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+  </ion-header>
+  <div id="container">
+    <strong>Formulario</strong>
+    <form [formGroup]="formulario" (submit)="enviar()">
+      <ion-list>
+        <ion-item>
+          <ion-label position="floating">Nome:</ion-label>
+          <ion-input formControlName="nome"></ion-input>
+          <ion-note *ngIf="formulario.controls.nome.touched" slot="error">
+            <span *ngIf="formulario.controls.nome.errors?.['required']"><ion-icon name="alert-outline"></ion-icon> Nome é obrigatório</span>
+            <span *ngIf="formulario.controls.nome.errors?.['minlength']"><ion-icon name="alert-outline"></ion-icon> O nome precisa ter mais de 3 caracteres</span>
+          </ion-note>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">
+              Sobrenome:
+          </ion-label>
+          <ion-input formControlName="sobrenome"></ion-input>
+          <ion-note *ngIf="formulario.controls.sobrenome.touched" slot="error">
+            <span *ngIf="formulario.controls.sobrenome.errors?.['required']"><ion-icon name="alert-outline"></ion-icon> Sobre nome é obrigatório</span>
+            <span *ngIf="formulario.controls.sobrenome.errors?.['minlength']"><ion-icon name="alert-outline"></ion-icon> O nome precisa ter mais de 3 caracteres</span>
+          </ion-note>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">
+              CPF:
+          </ion-label>
+          <ion-input [brmasker]="{person: true}" formControlName="cpf"></ion-input>
+          <ion-note *ngIf="formulario.controls.cpf.touched" slot="error">
+            <span *ngIf="formulario.controls.cpf.errors?.['required']"><ion-icon name="alert-outline"></ion-icon> Sobre nome é obrigatório</span>
+            <span *ngIf="formulario.controls.cpf.errors?.['cpfImcompleto']"><ion-icon name="alert-outline"></ion-icon>O CPF Precisa conter 11 dígitos</span>
+            <span *ngIf="formulario.controls.cpf.errors?.['cpfIncorreto']"><ion-icon name="alert-outline"></ion-icon>CPF incorreto</span>
+          </ion-note>
+        </ion-item>
+        <ion-item>
+          <ion-label>
+            CEP:
+          </ion-label>
+          <ion-input (focusout)="onBlur(formulario.controls.CEP.value)" [brmasker]="{mask:'00.000-000', len:10}" formControlName="CEP">
+          </ion-input>
+          <ion-note *ngIf="formulario.controls.CEP.touched" slot="error">
+            <span *ngIf="formulario.controls.CEP.errors?.['cpfInvalido']"><ion-icon name="alert-outline"></ion-icon> CEP incorreto</span>
+          </ion-note>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">
+            Logradouro:
+          </ion-label>
+          <ion-input formControlName="logradouro">
+          </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">
+            Complemento:
+          </ion-label>
+          <ion-input formControlName="complemento">
+          </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">
+            Bairro:
+          </ion-label>
+          <ion-input formControlName="bairro">
+          </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">
+            Cidade:
+          </ion-label>
+          <ion-input formControlName="localidade">
+          </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">
+            Estado:
+          </ion-label>
+          <ion-input formControlName="uf">
+          </ion-input>
+        </ion-item>
+        <!-- <ion-item>
+          <ion-radio-group display="in-line" nome="generos" allow-empty-selection="true" formControlName="generos"> 
+            <ion-item *ngFor="let genero of generos">
+              <ion-label>
+                {{genero}}
+              </ion-label>
+              <ion-radio [value]="genero" color="dark"></ion-radio>
+            </ion-item>
+          </ion-radio-group>
+        </ion-item> -->
+        <ion-item>
+          <ion-radio-group allow-empty-selection="true" formArrayName="generos">
+            <ion-item *ngFor="let genero of generos let i=index" [formGroupName]="i">
+              <ion-label>
+                {{genero}}
+              </ion-label>
+              <ion-radio [value]="genero" (click)="selecionaGenero(i)">
+              </ion-radio>
+            </ion-item>
+          </ion-radio-group>
+        </ion-item>
+      </ion-list>
+      <ion-button type="submit">Enviar</ion-button>
+    </form>
+  </div>
+</ion-content>
